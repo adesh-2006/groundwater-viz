@@ -1,0 +1,68 @@
+.container {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(61, 214, 140, 0.12);
+    border: 1px solid rgba(61, 214, 140, 0.08);
+    transition: all 0.4s var(--ease-out);
+    cursor: pointer;
+    position: relative;
+}
+
+.dot:hover {
+    background: rgba(61, 214, 140, 0.25);
+    border-color: rgba(61, 214, 140, 0.3);
+}
+
+.dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(61, 214, 140, 0.3);
+}
+
+.label {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+.dot:hover .label,
+.dot.active .label {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.line {
+    width: 1px;
+    height: 18px;
+    background: rgba(61, 214, 140, 0.06);
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .container {
+        display: none;
+    }
+}

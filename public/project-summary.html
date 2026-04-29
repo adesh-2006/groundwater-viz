@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaViz — Complete Project File Reference</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0f0d;
+            color: #e4ede8;
+            line-height: 1.7;
+            padding: 40px 48px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                color: #111;
+                padding: 20px 30px;
+                font-size: 11px;
+                line-height: 1.5;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            h1,
+            h2,
+            h3 {
+                color: #111 !important;
+            }
+
+            .section {
+                border-color: #ccc !important;
+                page-break-inside: avoid;
+            }
+
+            table {
+                font-size: 10px;
+            }
+
+            th {
+                background: #e8e8e8 !important;
+                color: #111 !important;
+            }
+
+            td {
+                color: #222 !important;
+                border-color: #ddd !important;
+            }
+
+            .badge {
+                background: #eee !important;
+                color: #333 !important;
+                border-color: #ccc !important;
+            }
+
+            .arch-box {
+                background: #f5f5f5 !important;
+                border-color: #ccc !important;
+                color: #111 !important;
+            }
+
+            .file-path {
+                color: #555 !important;
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #3dd68c, #4db8db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media print {
+            h1 {
+                -webkit-text-fill-color: #111;
+                background: none;
+            }
+        }
+
+        .subtitle {
+            color: rgba(228, 237, 232, 0.5);
+            font-size: 0.85rem;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #3dd68c;
+            margin: 32px 0 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(61, 214, 140, 0.15);
+        }
+
+        h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #4db8db;
+            margin: 16px 0 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(228, 237, 232, 0.4);
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        td {
+            padding: 8px 10px;
+            font-size: 0.78rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: top;
+        }
+
+        .file-path {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #4db8db;
+            white-space: nowrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .b-page {
+            background: rgba(61, 214, 140, 0.12);
+            color: #3dd68c;
+            border: 1px solid rgba(61, 214, 140, 0.2);
+        }
+
+        .b-comp {
+            background: rgba(77, 184, 219, 0.12);
+            color: #4db8db;
+            border: 1px solid rgba(77, 184, 219, 0.2);
+        }
+
+        .b-api {
+            background: rgba(255, 146, 43, 0.12);
+            color: #ff922b;
+            border: 1px solid rgba(255, 146, 43, 0.2);
+        }
+
+        .b-style {
+            background: rgba(177, 151, 252, 0.12);
+            color: #b197fc;
+            border: 1px solid rgba(177, 151, 252, 0.2);
+        }
+
+        .b-lib {
+            background: rgba(255, 212, 59, 0.12);
+            color: #ffd43b;
+            border: 1px solid rgba(255, 212, 59, 0.2);
+        }
+
+        .b-cfg {
+            background: rgba(228, 237, 232, 0.06);
+            color: rgba(228, 237, 232, 0.5);
+            border: 1px solid rgba(228, 237, 232, 0.1);
+        }
+
+        .b-asset {
+            background: rgba(116, 192, 252, 0.12);
+            color: #74c0fc;
+            border: 1px solid rgba(116, 192, 252, 0.2);
+        }
+
+        .section {
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .arch-box {
+            background: rgba(61, 214, 140, 0.05);
+            border: 1px solid rgba(61, 214, 140, 0.12);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            font-size: 0.78rem;
+            color: rgba(228, 237, 232, 0.7);
+        }
+
+        .arch-box code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #3dd68c, #4db8db);
+            color: #040a07;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(61, 214, 140, 0.3);
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(61, 214, 140, 0.4);
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-lbl {
+            font-size: 0.6rem;
+            color: rgba(228, 237, 232, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 2px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.7rem;
+            color: rgba(228, 237, 232, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+    <h1>🌿 AquaViz — Groundwater Monitoring Platform</h1>
+    <p class="subtitle">Complete Project File Reference &amp; Architecture Guide &bull; Generated: 28 Apr 2026</p>
+
+    <!-- ═══ STATS ═══ -->
+    <div class="stat-row">
+        <div class="stat-card">
+            <div class="stat-val" style="color:#3dd68c">51</div>
+            <div class="stat-lbl">Total Source Files</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" style="color:#4db8db">12</div>
+            <div class="stat-lbl">React Components</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" style="color:#ff922b">13</div>
+            <div class="stat-lbl">API Routes</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" style="color:#b197fc">6</div>
+            <div class="stat-lbl">Pages / Routes</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" style="color:#ffd43b">1</div>
+            <div class="stat-lbl">Shared Lib</div>
+        </div>
+    </div>
+
+    <!-- ═══ ARCHITECTURE ═══ -->
+    <h2>🏗️ Architecture Overview</h2>
+    <div class="arch-box">
+        <strong>Tech Stack:</strong> Next.js 16 (Turbopack) &bull; React 19 &bull; Framer Motion &bull; Three.js / R3F
+        &bull; Leaflet &bull; GSAP<br>
+        <strong>Data Sources:</strong> India WRIS ArcGIS (arc.indiawris.gov.in) &bull; India WRIS Dataset API
+        (indiawris.gov.in) &bull; CGWB GWR-2024<br>
+        <strong>Storage:</strong> In-memory (<code>globalThis</code> singleton via <code>sensorStore.js</code>) — no
+        external database<br>
+        <strong>Caching:</strong> Server-side in-memory Maps with 5–30 min TTL per route &bull; Max 50 entries LRU
+    </div>
+
+    <!-- ═══ SECTION 1: PAGES ═══ -->
+    <h2>📄 Pages (Frontend Routes)</h2>
+    <div class="section">
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Type</th>
+                <th>Route</th>
+                <th>Role &amp; Description</th>
+            </tr>
+            <tr>
+                <td class="file-path">app/layout.js</td>
+                <td><span class="badge b-cfg">Layout</span></td>
+                <td>*</td>
+                <td><strong>Root Layout.</strong> Wraps all pages. Sets HTML lang, imports globals.css, defines SEO
+                    metadata (title: "AquaViz — Jungle Groundwater Visualization"), and emoji favicon.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/page.js</td>
+                <td><span class="badge b-page">Page</span></td>
+                <td>/</td>
+                <td><strong>Landing Page (Home).</strong> Orchestrates the full cinematic scroll experience. Dynamically
+                    imports all heavy components (VideoBackground, RainScene, LiveMonitor, WRISExplorer, SensorMap) with
+                    SSR disabled. Tracks scroll progress via Framer Motion's useScroll and passes it to background
+                    layers.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/login/page.js</td>
+                <td><span class="badge b-page">Page</span></td>
+                <td>/login</td>
+                <td><strong>Login Page.</strong> Email/password form with demo credentials (admin@aquaviz.com /
+                    user@aquaviz.com). Posts to /api/auth/login, stores JWT token in localStorage, redirects
+                    admin→/admin, user→/dashboard. Jungle video background.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/signup/page.js</td>
+                <td><span class="badge b-page">Page</span></td>
+                <td>/signup</td>
+                <td><strong>Registration Page.</strong> Username, email, password, role selection. Posts to
+                    /api/auth/signup. Auto-login after registration. Shares auth.module.css with login.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/dashboard/page.js</td>
+                <td><span class="badge b-page">Page</span></td>
+                <td>/dashboard</td>
+                <td><strong>User Dashboard.</strong> Full sensor management view (509 lines). Shows all sensors with
+                    live readings, SVG history charts (HistoryChart component with hover tooltips), status badges.
+                    Fetches from /api/admin/sensors and /api/sensor-history. Interactive charts with water level, pH,
+                    TDS, temperature metrics.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/admin/page.js</td>
+                <td><span class="badge b-page">Page</span></td>
+                <td>/admin</td>
+                <td><strong>Admin Panel.</strong> Full CRUD for users &amp; sensors (606 lines). 4 tabs: Overview,
+                    Users, Sensors, Readings. Add/edit/delete sensors, push manual readings, toggle user roles, view
+                    stats. Uses toast notifications. Protected route with logout.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/groundwater-map/page.js</td>
+                <td><span class="badge b-page">Page</span></td>
+                <td>/groundwater-map</td>
+                <td><strong>Full-Screen Map (Server Component).</strong> SEO wrapper that renders GroundwaterMapClient.
+                    Title: "Ground Water Level Map — India WRIS Live Data".</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/groundwater-map/GroundwaterMapClient.js</td>
+                <td><span class="badge b-comp">Client</span></td>
+                <td>/groundwater-map</td>
+                <td><strong>Map Client Wrapper.</strong> Dynamically imports GroundwaterMap component (SSR disabled).
+                    Shows loading spinner with "Connecting to India WRIS ArcGIS Services" message.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ═══ SECTION 2: COMPONENTS ═══ -->
+    <h2>🧩 Components (UI Building Blocks)</h2>
+    <div class="section">
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Lines</th>
+                <th>Role &amp; Description</th>
+            </tr>
+            <tr>
+                <td class="file-path">Navbar.jsx</td>
+                <td>72</td>
+                <td><strong>Navigation Bar.</strong> Sticky top nav with scroll-based opacity (useScroll → bgOpacity).
+                    Links: Rainfall, Infiltration, Aquifer, Dashboard, Live Data 🔴, India WRIS, GW Map, Admin, Sign In.
+                    Mobile hamburger menu.</td>
+            </tr>
+            <tr>
+                <td class="file-path">HeroSection.jsx</td>
+                <td>94</td>
+                <td><strong>Hero Landing.</strong> "Journey Into Groundwater" title with gradient text. Live Monitoring
+                    Active badge, description, CTA buttons (Explore Journey / View Dashboard), stats row (12 sensors,
+                    24/7, 9 states). Framer Motion staggered entry.</td>
+            </tr>
+            <tr>
+                <td class="file-path">VideoBackground.jsx</td>
+                <td>51</td>
+                <td><strong>Cinematic Video BG.</strong> Fixed full-screen looping jungle-fog.mp4 video at 0.8x playback
+                    rate. Layered with color grade, vignette, scanlines, and scroll-based darkening overlays.</td>
+            </tr>
+            <tr>
+                <td class="file-path">RainScene.jsx</td>
+                <td>125</td>
+                <td><strong>3D Rain Particles.</strong> Three.js Canvas (React Three Fiber) with 6,000 rain streak
+                    particles + 40 floating mist particles. Uses useFrame for per-frame animation. Intensity increases
+                    with scroll. Additive blending for glow effect.</td>
+            </tr>
+            <tr>
+                <td class="file-path">ScrollProgress.jsx</td>
+                <td>43</td>
+                <td><strong>Scroll Navigation Dots.</strong> Vertical dot navigation (Sky→Rain→Soil→Aquifer→Data→Map).
+                    Highlights active section based on scroll %. Click to smooth-scroll to section.</td>
+            </tr>
+            <tr>
+                <td class="file-path">GroundwaterLayers.jsx</td>
+                <td>92</td>
+                <td><strong>Water Cycle Story.</strong> 3 scroll-animated sections explaining the groundwater journey:
+                    Rainfall (Atmosphere), Infiltration (Vadose Zone), Aquifer Storage (Saturated Zone). Each with
+                    metrics and animated progress bars.</td>
+            </tr>
+            <tr>
+                <td class="file-path">Dashboard.jsx</td>
+                <td>200</td>
+                <td><strong>Inline Dashboard (Home).</strong> 6 glass cards: Active Sensors, Avg Water Level, pH,
+                    Rainfall, Recharge Rate, Water Temp. Animated counters, progress bars. Fetches from
+                    /api/groundwater. Falls back to mock data on error.</td>
+            </tr>
+            <tr>
+                <td class="file-path">LiveMonitor.jsx</td>
+                <td>429</td>
+                <td><strong>🔴 Live WRIS Monitor.</strong> Real-time national groundwater dashboard. Fetches overview +
+                    water-level from India WRIS. Shows: 4 national stats (406 BCM availability), 3 station counts
+                    (92,971 total), block categories (Safe/Critical/Over-Exploited), top 8 overexploited states, 5 live
+                    water level cards with trends, draft breakdown. Auto-refreshes every 5 min.</td>
+            </tr>
+            <tr>
+                <td class="file-path">WRISExplorer.jsx</td>
+                <td>603</td>
+                <td><strong>India WRIS Data Explorer.</strong> Multi-dataset explorer (GW Level, Rainfall, River Level,
+                    Discharge, Temp, Humidity). Preset locations dropdown. State→District→Agency cascading filters via
+                    /api/wris/master. Data table + summary stats. Fetches from /api/wris.</td>
+            </tr>
+            <tr>
+                <td class="file-path">SensorMap.jsx</td>
+                <td>162</td>
+                <td><strong>Leaflet Sensor Map (Home).</strong> Mini India map with 9 DWLR sensor markers (Delhi,
+                    Mumbai, Pune, Bangalore, etc.). Color-coded: Green=Good, Orange=Moderate, Red=Critical. Dark CARTO
+                    basemap. Links to full /groundwater-map page.</td>
+            </tr>
+            <tr>
+                <td class="file-path">GroundwaterMap.jsx</td>
+                <td>713</td>
+                <td><strong>Full India WRIS Map.</strong> Interactive Leaflet map with 90,000+ stations loaded from
+                    India WRIS ArcGIS. MarkerCluster for performance. State/District/Telemetry filters. Depth-based
+                    color coding (7 depth classes). Station detail panel with charts. Connects to /api/wris/arcgis.</td>
+            </tr>
+            <tr>
+                <td class="file-path">CTASection.jsx</td>
+                <td>46</td>
+                <td><strong>Call-to-Action + Footer.</strong> "Ready to Monitor?" section with Launch Dashboard button
+                    and Back to Top link. Footer: "© 2025 AquaViz".</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ═══ SECTION 3: CSS ═══ -->
+    <h2>🎨 Stylesheets</h2>
+    <div class="section">
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Lines</th>
+                <th>Role</th>
+            </tr>
+            <tr>
+                <td class="file-path">app/globals.css</td>
+                <td>226</td>
+                <td><strong>Global Design System.</strong> CSS variables (dark forest palette), reset, Inter + JetBrains
+                    Mono fonts, glass morphism, gradient-text utility, scrollbar, keyframes (pulse-glow, shimmer,
+                    float-subtle, marker-pulse), responsive breakpoints.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/page.module.css</td>
+                <td>~80</td>
+                <td>Home page specific styles.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/login/auth.module.css</td>
+                <td>—</td>
+                <td>Login &amp; Signup shared auth form styles (glass card, inputs, video BG overlay).</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/admin/admin.module.css</td>
+                <td>—</td>
+                <td>Admin panel layout, tabs, tables, modals, toast notifications.</td>
+            </tr>
+            <tr>
+                <td class="file-path">app/dashboard/dashboard.module.css</td>
+                <td>—</td>
+                <td>User dashboard grid, sensor cards, chart containers.</td>
+            </tr>
+            <tr>
+                <td class="file-path">*.module.css (×12)</td>
+                <td>—</td>
+                <td>Each component has a co-located CSS module for scoped styles. Key ones: LiveMonitor (714 lines),
+                    GroundwaterMap (19,685 bytes), WRISExplorer (14,421 bytes).</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ═══ SECTION 4: API ROUTES ═══ -->
+    <h2>⚡ API Routes (Backend)</h2>
+    <div class="section">
+
+        <h3>🔐 Authentication</h3>
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Role &amp; Description</th>
+            </tr>
+            <tr>
+                <td class="file-path">api/auth/login/route.js</td>
+                <td>POST</td>
+                <td>/api/auth/login</td>
+                <td><strong>Login.</strong> Checks email/password against in-memory user list. Returns base64 token +
+                    user object with role. Demo: admin@aquaviz.com/admin123.</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/auth/signup/route.js</td>
+                <td>POST</td>
+                <td>/api/auth/signup</td>
+                <td><strong>Registration.</strong> Creates new user with auto-incremented ID. Validates password ≥ 6
+                    chars. Returns token for auto-login.</td>
+            </tr>
+        </table>
+
+        <h3>📊 Sensor / Dashboard Data</h3>
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Role</th>
+            </tr>
+            <tr>
+                <td class="file-path">api/groundwater/route.js</td>
+                <td>GET</td>
+                <td>/api/groundwater</td>
+                <td><strong>Dashboard Summary.</strong> Reads from sensorStore (getAllSensors + getStats). Enriches with
+                    real India WRIS rainfall data. Returns: active_sensors, avg_water_level, avg_ph, rainfall_today,
+                    recharge rate.</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/rainfall/route.js</td>
+                <td>GET</td>
+                <td>/api/rainfall</td>
+                <td><strong>Rainfall Data.</strong> Simulated hourly/monthly rainfall generator. 6 Indian regions with
+                    status. Types: summary, hourly (24h), monthly (12 months).</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/sensor-history/route.js</td>
+                <td>GET</td>
+                <td>/api/sensor-history</td>
+                <td><strong>Sensor History + Real WRIS.</strong> Combines local pushed readings (sensorStore) with real
+                    India WRIS groundwater level timeseries. Fetches water quality from ArcGIS. Maps sensor states to
+                    WRIS locations. 316 lines.</td>
+            </tr>
+        </table>
+
+        <h3>🛠️ Admin CRUD</h3>
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Methods</th>
+                <th>Endpoint</th>
+                <th>Role</th>
+            </tr>
+            <tr>
+                <td class="file-path">api/admin/sensors/route.js</td>
+                <td>GET POST PUT DELETE</td>
+                <td>/api/admin/sensors</td>
+                <td><strong>Sensor CRUD.</strong> List all, add new, update, delete, push readings. All operations go
+                    through sensorStore. POST action="push-reading" updates sensor readings.</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/admin/sensors/history/route.js</td>
+                <td>GET</td>
+                <td>/api/admin/sensors/history</td>
+                <td><strong>Sensor Reading History.</strong> Returns historical readings for a specific sensor_id from
+                    sensorStore (limit parameter, default 50).</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/admin/users/route.js</td>
+                <td>GET</td>
+                <td>/api/admin/users</td>
+                <td><strong>User List.</strong> Returns 4 hardcoded users (admin, operator1, field_eng, analyst).</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/admin/stats/route.js</td>
+                <td>GET</td>
+                <td>/api/admin/stats</td>
+                <td><strong>Admin Statistics.</strong> Returns totalUsers, totalSensors, activeSensors, criticalReadings
+                    from sensorStore.</td>
+            </tr>
+        </table>
+
+        <h3>🌐 India WRIS Integration</h3>
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Role</th>
+            </tr>
+            <tr>
+                <td class="file-path">api/wris/route.js</td>
+                <td>GET</td>
+                <td>/api/wris</td>
+                <td><strong>WRIS Dataset Proxy.</strong> Proxies 7 India WRIS datasets: groundwater-level, rainfall,
+                    river-water-level, river-discharge, temperature, humidity, reservoir. 5-min cache TTL.</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/wris/realtime/route.js</td>
+                <td>GET</td>
+                <td>/api/wris/realtime</td>
+                <td><strong>🔴 Live Monitor Backend.</strong> 477 lines. 3 actions: overview (GWR-2024 national stats +
+                    block categories + station counts), water-level (live readings from 10 preset locations),
+                    water-quality (station chemical params). SSL bypass for ArcGIS.</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/wris/arcgis/route.js</td>
+                <td>GET</td>
+                <td>/api/wris/arcgis</td>
+                <td><strong>ArcGIS CORS Proxy.</strong> 274 lines. Proxies India WRIS ArcGIS MapServer queries. Handles
+                    station listing, state/district filtering, statistics queries, water quality data. SSL bypass +
+                    retry logic. 10-min cache.</td>
+            </tr>
+            <tr>
+                <td class="file-path">api/wris/master/route.js</td>
+                <td>GET</td>
+                <td>/api/wris/master</td>
+                <td><strong>Master Data.</strong> Fetches dropdown lists: states, districts (by state), agencies (by
+                    state+district), basins, stations. 30-min cache for stable reference data.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ═══ SECTION 5: LIB ═══ -->
+    <h2>📦 Shared Library</h2>
+    <div class="section">
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Lines</th>
+                <th>Role</th>
+            </tr>
+            <tr>
+                <td class="file-path">lib/sensorStore.js</td>
+                <td>205</td>
+                <td><strong>In-Memory Sensor Data Store.</strong> Uses <code>globalThis</code> singleton to share state
+                    across all API routes (prevents Turbopack module duplication). Manages 12 default DWLR sensors with
+                    auto-generated 30-day history. Exports: getAllSensors, getSensorById, addSensor, updateSensor,
+                    pushReading, getHistory, deleteSensor, getStats. Computes quality status (Good/Moderate/Critical)
+                    based on water level &amp; pH.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ═══ SECTION 6: CONFIG ═══ -->
+    <h2>⚙️ Configuration &amp; Assets</h2>
+    <div class="section">
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Role</th>
+            </tr>
+            <tr>
+                <td class="file-path">package.json</td>
+                <td>Dependencies: next@16.2.4, react@19.2.4, framer-motion, three, @react-three/fiber,
+                    @react-three/drei, gsap, leaflet, leaflet.markercluster</td>
+            </tr>
+            <tr>
+                <td class="file-path">next.config.mjs</td>
+                <td>Next.js config — custom settings for build/runtime</td>
+            </tr>
+            <tr>
+                <td class="file-path">jsconfig.json</td>
+                <td>Path aliases (@/ → src/)</td>
+            </tr>
+            <tr>
+                <td class="file-path">eslint.config.mjs</td>
+                <td>ESLint config extending next/core-web-vitals</td>
+            </tr>
+            <tr>
+                <td class="file-path">public/images/</td>
+                <td>jungle-fog.mp4 (video BG), jungle-bg.png (poster), + other assets</td>
+            </tr>
+            <tr>
+                <td class="file-path">public/*.svg</td>
+                <td>Default Next.js SVG icons (file, globe, next, vercel, window)</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ═══ DATA FLOW ═══ -->
+    <h2>🔄 Data Flow Diagram</h2>
+    <div class="arch-box"
+        style="font-family:'JetBrains Mono',monospace; font-size:0.68rem; white-space:pre; overflow-x:auto; line-height:1.8;">
+        ┌─────────────────────────────────────────────────────────────────────────┐
+        │ FRONTEND (Client-Side) │
+        │ │
+        │ page.js ──► HeroSection ──► GroundwaterLayers ──► Dashboard │
+        │ │ │ │
+        │ VideoBackground │ /api/groundwater │
+        │ RainScene ▼ ▼ │
+        │ ScrollProgress LiveMonitor ◄──► /api/wris/realtime │
+        │ WRISExplorer ◄──► /api/wris + /master │
+        │ Navbar SensorMap │
+        │ CTASection GroundwaterMap ◄──► /api/wris/arcgis │
+        │ │
+        │ /login ────► /api/auth/login ──► localStorage(token) │
+        │ /signup ───► /api/auth/signup │
+        │ /dashboard ► /api/admin/sensors + /api/sensor-history │
+        │ /admin ────► /api/admin/* (sensors, users, stats) │
+        └──────────────────────────────┬──────────────────────────────────────────┘
+        │
+        ▼
+        ┌─────────────────────────────────────────────────────────────────────────┐
+        │ BACKEND (API Routes) │
+        │ │
+        │ sensorStore.js (globalThis) ◄──► admin/sensors, groundwater, stats │
+        │ │
+        │ India WRIS ArcGIS ◄───────────► wris/realtime, wris/arcgis │
+        │ (arc.indiawris.gov.in) (SSL bypass, in-memory cache) │
+        │ │
+        │ India WRIS Dataset API ◄──────► wris/route, sensor-history │
+        │ (indiawris.gov.in) (POST requests, 5-30 min cache) │
+        └─────────────────────────────────────────────────────────────────────────┘</div>
+
+    <div class="footer">
+        AquaViz — Groundwater Visualization Platform &bull; Next.js 16 &bull; 51 source files &bull; India WRIS + CGWB
+        Integration<br>
+        Document auto-generated for project reference
+    </div>
+
+</body>
+
+</html>

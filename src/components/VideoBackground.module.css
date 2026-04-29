@@ -1,0 +1,68 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%) scale(1.05);
+    object-fit: cover;
+    filter: saturate(0.7) contrast(1.15) brightness(0.65);
+}
+
+/* Cinematic color grade — green-teal push */
+.colorGrade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(4, 20, 12, 0.35) 0%,
+            rgba(0, 10, 5, 0.15) 40%,
+            rgba(4, 20, 12, 0.4) 100%);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+/* Vignette */
+.vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+            transparent 40%,
+            rgba(0, 0, 0, 0.6) 100%);
+    pointer-events: none;
+}
+
+/* Subtle scanlines for film texture */
+.scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.03) 2px,
+            rgba(0, 0, 0, 0.03) 4px);
+    pointer-events: none;
+}
+
+/* Scroll-based darkening for underground transition */
+.scrollDarken {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(4, 10, 7, 0.3) 0%,
+            rgba(4, 10, 7, 0.95) 60%,
+            rgba(4, 10, 7, 1) 100%);
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
