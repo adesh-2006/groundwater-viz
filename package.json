@@ -1,6 +1,7 @@
 {
   "name": "groundwater-viz",
   "version": "0.1.0",
+  "description": "Groundwater Visualization Platform",
   "private": true,
   "scripts": {
     "dev": "next dev",

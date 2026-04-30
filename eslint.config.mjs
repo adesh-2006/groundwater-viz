@@ -14,3 +14,5 @@ const eslintConfig = defineConfig([
 ]);
 
 export default eslintConfig;
+
+// Updated configuration
