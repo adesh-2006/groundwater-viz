@@ -6,6 +6,14 @@ A comprehensive, real-time groundwater monitoring and visualization platform. It
 
 ---
 
+## What it Does (Quick Summary)
+**AquaViz** is a web-based platform that tracks groundwater levels and water purity in real-time. Instead of static spreadsheets, users interact with 3D maps and dynamic charts.
+- **Data Pipeline:** Automatically pulls official data from government sources like **India WRIS** and the **CGWB**, while supporting local hardware sensors.
+- **Architecture Highlights:** Developed using **Next.js** for handling both the frontend visual dashboard and the backend API fetchers. 
+- **Performance:** Implements a custom **In-Memory Data Store** that caches government API data locally. This guarantees instant load times and acts as a fault-tolerant safety net.
+
+---
+
 ## Table of Contents
 
 - [System Architecture](#system-architecture)
